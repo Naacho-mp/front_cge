@@ -5,7 +5,7 @@ lecturas de consumo y generación de boletas. Permite a los usuarios interactuar
 consulta, actualización y eliminación (CRUD) según los permisos de cada entidad.
 
 ## Instrucciones para la puesta en funcionamiento del Proyecto CGE
-- Descarga del proyecto via GitHub a través del siguiente Link: 
+- Descargar o clonar el proyecto via GitHub a través del siguiente Link: https://github.com/Naacho-mp/front_cge
 - Abrir el proyecto en el IDE a elección
 - Ubicarse en la raiz del proyecto, e ingresar la instruccion "npm install" para instalar dependencias necesarias
 - Correr el proyecto mediante el comando "ng serve"
