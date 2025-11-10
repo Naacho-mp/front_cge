@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Generación de Boletas</h2>
+
+  <!-- FORMULARIO -->
+  <form class="row g-3 mb-4" [formGroup]="form">
+    <!-- Cliente -->
+    <div class="col-md-3">
+      <label for="id_cliente" class="form-label">Cliente</label>
+      <select class="form-control" id="id_cliente" formControlName="id_cliente">
+        <option value="">Seleccione un cliente</option>
+        <option *ngFor="let cliente of clientes" [value]="cliente.id_cliente">
+          {{ cliente.nombre_razon }} - {{ cliente.id_cliente }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Mes -->
+    <div class="col-md-3">
+      <label for="mes" class="form-label">Mes</label>
+      <select class="form-control" id="mes" formControlName="mes">
+        <option value="">Seleccione un mes</option>
+        <option *ngFor="let mes of meses" [value]="mes.valor">{{ mes.nombre }}</option>
+      </select>
+    </div>
+
+    <!-- Año -->
+    <div class="col-md-2">
+      <label for="anio" class="form-label">Año</label>
+      <input type="text" class="form-control" id="anio" formControlName="anio" placeholder="2025" maxlength="4"
+        [class.is-invalid]="form.get('anio')?.invalid && form.get('anio')?.touched"
+      />
+      <div class="invalid-feedback">
+        Ingrese un año válido
+      </div>
+    </div>
+
+    <!-- Estado -->
+    <div class="col-md-2">
+      <label for="estado" class="form-label">Estado</label>
+      <select class="form-control" id="estado" formControlName="estado">
+        <option value="">Seleccione estado</option>
+        <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+      </select>
+    </div>
+
+    <!-- Botón generar boleta-->
+    <div class="col-md-2 d-flex align-items-end">
+      <button type="button" class="btn btn-primary w-100" (click)="generarBoleta()" [disabled]="loading || form.invalid">
+        {{ loading ? 'Generando...' : 'Generar Boleta' }}
+      </button>
+    </div>
+  </form>
+
+</div>

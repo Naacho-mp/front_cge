@@ -1,0 +1,123 @@
+<div class="filtro-letra text-center mb-3">
+  <h2 class="text-start ms-3">Listado de Medidores</h2>
+  <input type="text" [(ngModel)]="filtroCodigo" placeholder="Buscar por código" class="form-control d-inline-block w-auto" style="width: 250px; display: inline-block; margin-right: 10px;"
+  />
+  <button class="btn btn-primary btn-sm me-2" (click)="filtrarCodigo()">Filtrar</button>
+  <button class="btn btn-secondary btn-sm" (click)="mostrarTodosMedidores()">Mostrar todos</button>
+</div>
+
+<!-- Tabla de medidores -->
+<table class="table" *ngIf="medidores.length > 0; else sinMedidores">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Código Medidor</th>
+    <th>ID Cliente</th>
+    <th>Dirección Suministro</th>
+    <th>Estado</th>
+    <th>Acciones</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let medidor of medidoresPagina">
+    <td>{{ medidor.id_medidor }}</td>
+    <td>{{ medidor.codigo_medidor }}</td>
+    <td>{{ medidor.id_cliente }}</td>
+    <td>{{ medidor.direccion_suministro }}</td>
+    <td>{{ medidor.estado }}</td>
+    <td>
+      <button class="btn btn-warning btn-sm me-2" (click)="editarMedidor(medidor)">Editar</button>
+      <button class="btn btn-danger btn-sm" (click)="eliminarMedidor(medidor)">Eliminar</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Modal de Edición  -->
+<div class="modal fade" id="modalEditarMedidor" tabindex="-1" aria-labelledby="modalEditarMedidorLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarMedidorLabel">
+          Editar Medidor - {{ medidorEditando?.codigo_medidor }}
+        </h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formEdicion">
+          <!-- ID Medidor solo se lee -->
+          <div class="mb-3">
+            <label class="form-label"><strong>ID Medidor:</strong></label>
+            <p class="form-control-plaintext">{{ medidorEditando?.id_medidor }}</p>
+          </div>
+
+          <!-- ID Cliente -->
+          <div class="mb-3">
+            <label class="form-label"><strong>ID Cliente:</strong></label>
+            <p class="form-control-plaintext">{{ medidorEditando?.id_cliente }}</p>
+          </div>
+
+          <!-- Código Medidor -->
+          <div class="mb-3">
+            <label class="form-label"><strong>Código del Medidor:</strong></label>
+            <p class="form-control-plaintext">{{ medidorEditando?.codigo_medidor }}</p>
+          </div>
+
+          <!-- Dirección -->
+          <div class="mb-3">
+            <label for="direccion_suministro" class="form-label">Dirección de Suministro *</label>
+            <textarea class="form-control" id="direccion_suministro" formControlName="direccion_suministro" rows="3"
+              [class.is-invalid]="formEdicion.get('direccion_suministro')?.invalid && formEdicion.get('direccion_suministro')?.touched"
+            ></textarea>
+            <div class="invalid-feedback">
+              La dirección de suministro es requerida
+            </div>
+          </div>
+
+          <!-- Estado -->
+          <div class="mb-3">
+            <label for="estado" class="form-label">Estado *</label>
+            <select class="form-select" id="estado" formControlName="estado"
+              [class.is-invalid]="formEdicion.get('estado')?.invalid && formEdicion.get('estado')?.touched"
+            >
+              <option value="">Seleccione un estado</option>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+            </select>
+            <div class="invalid-feedback">
+              El estado es requerido
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" (click)="guardarCambios()"
+          [disabled]="formEdicion.invalid"
+        >
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Botones pagina -->
+<div class="d-flex justify-content-center align-items-center mt-3">
+  <button class="btn btn-pagina" (click)="anterior()" [disabled]="page === 1">
+    Anterior
+  </button>
+  <span>Página {{ page }} de {{ Math.ceil(medidores.length / pageSize) }}</span>
+  <button class="btn btn-pagina" (click)="siguiente()" [disabled]="page === Math.ceil(medidores.length / pageSize)">
+    Siguiente
+  </button>
+</div>
+
+
+<ng-template #sinMedidores>
+  <div class="text-center mt-3">
+    <p class="text-muted">No hay medidores registrados.</p>
+  </div>
+</ng-template>

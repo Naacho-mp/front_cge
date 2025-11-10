@@ -1,0 +1,53 @@
+<form class="form-vertical" [formGroup]="form" (ngSubmit)="guardar()">
+  <h1>Crear Lectura</h1>
+
+  <div class="form-group">
+    <label for="idMedidor" class="form-label">ID Medidor</label>
+    <select formControlName="id_medidor" id="idMedidor" class="form-select">
+      <option value="">Seleccione un medidor</option>
+      <option *ngFor="let m of medidores" [value]="m.id_medidor">{{ m.id_medidor }}</option>
+    </select>
+    <div *ngIf="form.get('id_medidor')?.invalid && form.get('id_medidor')?.touched" class="text-danger">
+      Debes seleccionar un medidor
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="anio" class="form-label">Año</label>
+    <input type="number" class="form-control" id="anio" formControlName="anio" placeholder="Ingrese el año" min="2000" max="2100" maxlength="4">
+    <div *ngIf="form.get('anio')?.invalid && form.get('anio')?.touched" class="text-danger">
+      El año es obligatorio
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="mes" class="form-label">Mes</label>
+    <select class="form-select" id="mes" formControlName="mes">
+      <option *ngFor="let mes of meses" [value]="mes.valor">{{ mes.nombre }}</option>
+    </select>
+    <div *ngIf="form.get('mes')?.invalid && form.get('mes')?.touched" class="text-danger">
+      Debes seleccionar un mes
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="lectura_kwh" class="form-label">Lectura (kWh)</label>
+    <input type="number" class="form-control" id="lectura_kwh" formControlName="lectura_kwh" placeholder="1250.50" step="0.01">
+    <div *ngIf="form.get('lectura_kwh')?.invalid && form.get('lectura_kwh')?.touched" class="text-danger">
+      La lectura es obligatoria
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="observacion" class="form-label">Observación</label>
+    <input type="text" class="form-control" id="observacion" formControlName="observacion" placeholder="Opcional">
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Crear Lectura</button>
+  </div>
+</form>
+
+
+
+

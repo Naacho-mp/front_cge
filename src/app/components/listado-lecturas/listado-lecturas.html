@@ -1,0 +1,25 @@
+<h2 class="text-start ms-3">Listado de Lecturas</h2>
+<table class="table" *ngIf="lecturas.length > 0; else sinLecturas">
+  <thead>
+  <tr>
+    <th>ID Medidor</th>
+    <th>Lectura KWh</th>
+    <th>Año</th>
+    <th>Mes</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let lectura of lecturas">
+    <td>{{ lectura.id_medidor }}</td>
+    <td>{{ lectura.lectura_kwh }}</td>
+    <td>{{ lectura.anio }}</td>
+    <td>{{ lectura.mes }}</td>
+  </tr>
+  </tbody>
+</table>
+
+<ng-template #sinLecturas>
+  <div class="text-center mt-3">
+    <p class="text-muted">No hay lecturas registradas.</p>
+  </div>
+</ng-template>

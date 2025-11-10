@@ -1,0 +1,82 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Listado de Boletas</h2>
+
+  <!-- FORMULARIO DE BÚSQUEDA -->
+  <form [formGroup]="form" class="mb-3">
+    <div class="row g-3 align-items-end">
+      <!-- Cliente -->
+      <div class="col-md-4">
+        <label for="id_cliente" class="form-label">Cliente</label>
+        <select class="form-control" id="id_cliente" formControlName="id_cliente">
+          <option value="">Seleccione un cliente</option>
+          <option *ngFor="let cliente of clientes" [value]="cliente.id_cliente">
+            {{ cliente.nombre_razon }} - {{ cliente.id_cliente }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Año -->
+      <div class="col-md-2">
+        <label for="anio" class="form-label">Año</label>
+        <input type="number" id="anio" class="form-control" formControlName="anio" placeholder="2025"/>
+      </div>
+
+      <!-- Mes -->
+      <div class="col-md-2">
+        <label for="mes" class="form-label">Mes</label>
+        <select class="form-control" id="mes" formControlName="mes">
+          <option value="">Seleccione un mes</option>
+          <option *ngFor="let mes of meses" [value]="mes.valor">{{ mes.nombre }}</option>
+        </select>
+      </div>
+
+      <!-- Botón Buscar -->
+      <div class="col-md-2">
+        <button type="button" class="btn btn-primary w-100" (click)="buscarBoletas()" [disabled]="loading || form.invalid">
+          {{ loading ? 'Buscando...' : 'Buscar' }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Tabla de resultadosde la busque da  de las boletas -->
+  <table class="table mt-4" *ngIf="boletas.length > 0">
+    <thead>
+    <tr>
+      <th>ID Cliente</th>
+      <th>Mes</th>
+      <th>Año</th>
+      <th>Kwh Consumidos</th>
+      <th>Tarifa Base</th>
+      <th>Cargos</th>
+      <th>IVA</th>
+      <th>Total a Pagar</th>
+      <th>Estado</th>
+      <th>Acción</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let boleta of boletas">
+      <td>{{ boleta.id_cliente }}</td>
+      <td>{{ getNombreMes(boleta.mes) }}</td>
+      <td>{{ boleta.anio }}</td>
+      <td>{{ boleta.kwh_total }}</td>
+      <td>{{ boleta.tarifa_base }}</td>
+      <td>{{ boleta.cargos  }}</td>
+      <td>{{ boleta.iva  }}</td>
+      <td>{{ boleta.total_pagar  }}</td>
+      <td>{{ boleta.estado }}</td>
+      <td>
+        <button
+          class="btn btn-success btn-sm" (click)="descargarPDF(boleta)">
+          Descargar
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && boletas.length === 0" class="text-center mt-4 text-muted">
+    No se encontraron boletas.
+  </div>
+</div>

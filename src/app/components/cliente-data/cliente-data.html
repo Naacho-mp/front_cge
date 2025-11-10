@@ -1,0 +1,59 @@
+<form class="form-vertical" [formGroup]="form" (ngSubmit)="guardar()">
+  <h1>Crear Cliente</h1>
+
+  <div class="form-group">
+    <label for="rutCliente" class="form-label">RUT</label>
+    <input type="text" class="form-control" formControlName="rut" id="rutCliente" placeholder="12345678-9" maxlength="10" required>
+    <div *ngIf="form.get('rut')?.invalid && form.get('rut')?.touched" class="text-danger">
+      El RUT es obligatorio</div>
+  </div>
+
+  <div class="form-group">
+    <label for="nombreCliente" class="form-label">Nombre/Razon</label>
+    <input type="text" class="form-control" formControlName="nombre_razon" id="nombreCliente" placeholder="Juan Mecanico" required>
+    <div *ngIf="form.get('nombre_razon')?.invalid && form.get('nombre_razon')?.touched" class="text-danger">
+      El nombre es obligatorio
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="emailCliente" class="form-label">Email</label>
+    <input type="email" class="form-control" formControlName="email_contacto" id="emailCliente" placeholder="Juan.Mecanico@gmail.com" required>
+    <div *ngIf="form.get('email_contacto')?.invalid && form.get('email_contacto')?.touched" class="text-danger">
+      El mail es obligatorio
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="telefonoCliente" class="form-label">Telefono</label>
+    <input type="text" class="form-control" formControlName="telefono" id="telefonoCliente" placeholder="+569 12345678" required>
+    <div *ngIf="form.get('telefono')?.invalid && form.get('telefono')?.touched" class="text-danger">
+      El teléfono es obligatorio
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="direccionCliente" class="form-label">Direccion Facturacion</label>
+    <input type="text" class="form-control" formControlName="direccion_facturacion" id="direccionCliente" placeholder="Calle siempre alegre" required>
+    <div *ngIf="form.get('direccion_facturacion')?.invalid && form.get('direccion_facturacion')?.touched" class="text-danger">
+      La dirección es obligatoria
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="estadoCliente" class="form-label" >Estado</label>
+    <select class="form-select" formControlName="estado" id="estadoCliente" required>
+      <option value="">Seleccione</option>
+      @for (e of estados; track e) {
+        <option [value]="e">{{ e }}</option>
+      }
+    </select>
+    <div *ngIf="form.get('estado')?.invalid && form.get('estado')?.touched" class="text-danger">
+      El estado es obligatorio
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Crear Cliente</button>
+  </div>
+</form>

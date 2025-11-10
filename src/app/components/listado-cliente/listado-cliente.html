@@ -1,0 +1,133 @@
+<div class="filtro-letra text-center mb-3">
+  <h2 class="text-start ms-3">Listado de Clientes</h2>
+  <input type="text" maxlength="8" [(ngModel)]="filtroRut" placeholder="Rut sin guion ni digito" class="form-control d-inline-block w-auto text-center"
+    style="width: 60px; display: inline-block; margin-right: 10px;"
+  />
+  <button class="btn btn-primary btn-sm me-2" (click)="filtrarRut()">Filtrar</button>
+  <button class="btn btn-secondary btn-sm" (click)="mostrarTodosClientes()">Mostrar todos</button>
+</div>
+
+<!-- Tabla de clientes -->
+<table class="table" *ngIf="clientes.length > 0; else sinClientes">
+  <thead>
+  <tr>
+    <th>RUT</th>
+    <th>Nombre/Razón</th>
+    <th>Email</th>
+    <th>Teléfono</th>
+    <th>Dirección Facturación</th>
+    <th>Estado</th>
+    <th>Acciones</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let cliente of clientesPagina">
+    <td>{{ cliente.rut }}</td>
+    <td>{{ cliente.nombre_razon }}</td>
+    <td>{{ cliente.email_contacto }}</td>
+    <td>{{ cliente.telefono }}</td>
+    <td>{{ cliente.direccion_facturacion }}</td>
+    <td>{{ cliente.estado }}</td>
+    <td>
+      <button class="btn btn-warning btn-sm me-2" (click)="editarCliente(cliente)">Editar</button>
+      <button class="btn btn-danger btn-sm"(click)="eliminarMedidor(cliente)">Eliminar</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Modal que se abre para editar el cliente -->
+<div class="modal fade" id="modalEditarCliente" tabindex="-1" aria-labelledby="modalEditarClienteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarClienteLabel">
+          Editar Cliente - {{ clienteEditando?.nombre_razon }}
+        </h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formEdicion">
+          <!-- RUT solo para ver -->
+          <div class="mb-3">
+            <label class="form-label"><strong>RUT:</strong></label>
+            <p class="form-control-plaintext">{{ clienteEditando?.rut }}</p>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email_contacto" class="form-label">Email de Contacto *</label>
+            <input type="email" class="form-control" id="email_contacto" formControlName="email_contacto"
+              [class.is-invalid]="formEdicion.get('email_contacto')?.invalid && formEdicion.get('email_contacto')?.touched"
+            />
+            <div class="invalid-feedback" *ngIf="formEdicion.get('email_contacto')?.errors?.['required']">
+              El email es requerido
+            </div>
+            <div class="invalid-feedback" *ngIf="formEdicion.get('email_contacto')?.errors?.['email']">
+              Ingrese un email válido
+            </div>
+          </div>
+
+          <!-- Teléfono -->
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono *</label>
+            <input type="text" class="form-control" id="telefono" formControlName="telefono"
+              [class.is-invalid]="formEdicion.get('telefono')?.invalid && formEdicion.get('telefono')?.touched"/>
+            <div class="invalid-feedback">
+              El teléfono es requerido
+            </div>
+          </div>
+
+          <!-- Dirección de Facturación -->
+          <div class="mb-3">
+            <label for="direccion_facturacion" class="form-label">Dirección de Facturación *</label>
+            <textarea class="form-control" id="direccion_facturacion" formControlName="direccion_facturacion" rows="3"
+              [class.is-invalid]="formEdicion.get('direccion_facturacion')?.invalid && formEdicion.get('direccion_facturacion')?.touched"
+            ></textarea>
+            <div class="invalid-feedback">
+              La dirección es requerida
+            </div>
+          </div>
+
+          <!-- Estado -->
+          <div class="mb-3">
+            <label for="estado" class="form-label">Estado *</label>
+            <select class="form-select" id="estado" formControlName="estado" [class.is-invalid]="formEdicion.get('estado')?.invalid && formEdicion.get('estado')?.touched"
+            >
+              <option value="">Seleccione un estado</option>
+              <option value="Activo">Activo</option>
+              <option value="Inactivo">Inactivo</option>
+            </select>
+            <div class="invalid-feedback">
+              El estado es requerido
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarCambios()" [disabled]="formEdicion.invalid"
+        >
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Botones pagina -->
+<div class="d-flex justify-content-center align-items-center mt-3">
+  <button class="btn btn-pagina" (click)="anterior()" [disabled]="page === 1">
+    Anterior
+  </button>
+  <span>Página {{ page }} de {{ Math.ceil(clientes.length / pageSize) }}</span>
+  <button class="btn btn-pagina" (click)="siguiente()" [disabled]="page === Math.ceil(clientes.length / pageSize)">
+    Siguiente
+  </button>
+</div>
+
+<ng-template #sinClientes>
+  <div class="text-center mt-3">
+    <p class="text-muted">No hay clientes registrados.</p>
+  </div>
+</ng-template>

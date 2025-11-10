@@ -1,0 +1,92 @@
+/* Contenedor principal */
+.container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 25px;
+  border: 1px solid #007bff;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Título */
+.container h2 {
+  text-align: center;
+  color: #004085;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+}
+
+form.row {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form .col-md-3,
+form .col-md-2,
+form .col-md-4,
+form .col-md-6 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Formato para los inputs y selects */
+.form-control {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #fff;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+.invalid-feedback {
+  font-size: 0.875rem;
+  color: #dc3545;
+}
+
+/* Estilo para el botoon */
+.btn-primary {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 5px;
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  transform: scale(1.02);
+}
+
+.btn-primary:disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.d-flex.align-items-end {
+  display: block !important;
+}
+
+/* Responsividad */
+@media (max-width: 576px) {
+  .container {
+    padding: 15px;
+  }
+}
