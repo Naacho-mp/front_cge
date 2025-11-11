@@ -1,8 +1,8 @@
 # Sistema de Gestión de Clientes, Medidores, Lecturas y Boletas CGE - Universidad Católica del Maule
 
-Este proyecto es una aplicación web de front-end desarrollada con Angular, orientada a la gestión integral de clientes, medidores eléctricos, 
-lecturas de consumo y generación de boletas. Permite a los usuarios interactuar con un backend a través de APIs REST, realizando operaciones de creación, 
-consulta, actualización y eliminación (CRUD) según los permisos de cada entidad.
+Este proyecto es una aplicación web de front-end desarrollada con Angular, orientada a la gestión de clientes, medidores, 
+lecturas de consumo y generación de boletas. Permite interactuar con un backend a través de APIs REST, realizando operaciones de creación, 
+consulta, actualización y eliminación (CRUD).
 
 ## Instrucciones para la puesta en funcionamiento del Proyecto CGE
 - Descargar o clonar el proyecto via GitHub a través del siguiente Link: https://github.com/Naacho-mp/front_cge
@@ -24,7 +24,7 @@ consulta, actualización y eliminación (CRUD) según los permisos de cada entid
 ## Funcionalidades principales del Proyecto
 
 ### Clientes
-- Registro de clientes con información básica: RUT, razón social, contacto, dirección y estado.
+- Registro de clientes con información básica: RUT, nombre o razón social, contacto, dirección y estado.
 - Listado y búsqueda de clientes existentes por RUT.
 - Actualización y eliminación de clientes.
 
